@@ -56,7 +56,7 @@ module.exports = {
             output = output.split("(/*__MODULES__*/)").join(fnc);
         }
 
-        output = "!function(global) {"+output.split("(/*__MODULES__*/)").join("global."+exportName+" = arguments[0]")+"}(this);";
+        output = "!function(global) {"+output.split("(/*__MODULES__*/)").join("")+"}(this);";
 
         return output;
     }

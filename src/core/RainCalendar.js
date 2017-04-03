@@ -1,5 +1,5 @@
 define(
-    'RainCalendar', [
+     [
         "api/api",
         "helpers/utils",
         "ui/datestring",
@@ -46,7 +46,8 @@ define(
         };
 
         var additionalUis = {}, additionalSelectionTypes = {};
-        var rainCalendarExport =  {
+
+        return {
             calenderize    : function (element, options) {
                 options = utils.extend(
                     {
@@ -112,11 +113,5 @@ define(
             UI             : UI,
             SELECTION_TYPE : SELECTION_TYPE
         };
-        // if(jQuery && $ === jQuery) {
-        //     $.fn.RainCalendar = function(options) {
-        //         rainCalendarExport.calenderize(this, options)
-        //     };
-        // }
-        return rainCalendarExport;
     }
 );

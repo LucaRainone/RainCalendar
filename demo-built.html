@@ -9,22 +9,22 @@
     <link rel="stylesheet" href="src/style/style.css">
     <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="dist/RainCalendar.min.js"></script>
+    <script type="text/javascript" src="dist/RainCalendar.jquery.min.js"></script>
 </head>
 <body>
+<div id="demo_window" class="rain_calendar_container">
 
-<div id="raincalendar_container" class="rain_calendar_container">
+</div>
+<div id="demo_jquery" class="rain_calendar_container">
     <input type="date" name="date " value="2016-02-10"/>
 </div>
 
-<div id="calendars_input" class="rain_calendar_container">
-
-</div>
 
 <script type="text/javascript">
 
 
     var t1 = +new Date();
-   var calendar = RainCalendar.calenderize('#raincalendar_container', {
+   var calendar = RainCalendar.calenderize('#demo_window', {
        lang: "it",
        numberOfMonths :3,
        weekStart :1,
@@ -33,10 +33,11 @@
        ui: RainCalendar.UI.STATIC_CALENDAR
 
    });
-   var calendarInput = RainCalendar.calenderize('#calendars_input', {
+   var calendarInput = $('#demo_jquery').rainCalendar({
        selectionType: RainCalendar.SELECTION_TYPE.MULTIPLE,
        ui: RainCalendar.UI.DATE_STRING
    });
+
    calendar.onSetSelectedDates(function(d) {
        calendarInput.select(d);
    });

@@ -112,17 +112,7 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
                _syncSelected($el, api);
            };
 
-           var _listeners = {
-               viewChange: [],
-               markDate : []
-           };
 
-           var _callback = function(c, ui, args) {
-               if(args === undefined) args = [];
-               for(var i = 0; i < _listeners[c].length; i++) {
-                   _listeners[c][i].apply(ui,args);
-               }
-           };
 
            return {
                build : function (element, options, locale, api) {
@@ -138,6 +128,18 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
                        }
                        , options
                    );
+
+                   var _listeners = {
+                       viewChange: [],
+                       markDate : []
+                   };
+
+                   var _callback = function(c, ui, args) {
+                       if(args === undefined) args = [];
+                       for(var i = 0; i < _listeners[c].length; i++) {
+                           _listeners[c][i].apply(ui,args);
+                       }
+                   };
 
                    if (typeof options.numberOfMonths !== 'function') {
                        var value              = options.numberOfMonths;
@@ -181,11 +183,11 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
                        _callback('markDate', ui, [d, ev.shiftKey, ev.altKey]);
                    });
 
-                   api.onSetSelectedDates(function (selectedDates) {
+                   api.onSetSelectedDates(function () {
                        _syncSelected($el, api);
                    });
 
-                   api.onSetDisabledDates(function (disabledDates) {
+                   api.onSetDisabledDates(function () {
                        _syncDisabled($el, api);
                    });
                    ui.onMarkDate = function(cbk) {

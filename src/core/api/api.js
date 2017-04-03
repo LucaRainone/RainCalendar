@@ -25,7 +25,6 @@ define(['helpers/utils'], function(utils) {
 
         return {
             select : function (dateOrRanges) {
-
                 var selection = utils.normalizeDates(dateOrRanges);
                 _check(selection, disabledDates);
                 selectedDates = selection;

@@ -10,7 +10,7 @@
     <script type="text/javascript" src="node_modules/requirejs/require.js"></script>
     <script type="text/javascript">
         requirejs.config({
-                             baseUrl : 'src/js',
+                             baseUrl : 'src/core',
                              paths   : {
                                  // the left side is the module ID,
                                  // the right side is the path to
@@ -23,6 +23,8 @@
                                  jquery    : '../../node_modules/jquery/dist/jquery.min',
 //                                 domEngine : '../domEngine/jquasi',
                                  domEngine: '../domEngine/jquery',
+                                 "target-window": '../target/target-window',
+                                 "target-jquery": '../target/target-jquery'
                              }
                          });
     </script>
@@ -31,18 +33,19 @@
 </head>
 <body>
 
-<div id="raincalendar_container" class="rain_calendar_container">
+<div id="demo_jquery" class="rain_calendar_container">
     <input type="date" name="date " value="2016-02-10"/>
 </div>
-
-<div id="calendars_input" class="rain_calendar_container">
+<div id="demo_window" class="rain_calendar_container">
 
 </div>
 
 <script type="text/javascript">
-require(["RainCalendar","domEngine"], function(RainCalendar,$) {
-    var t1 = +new Date();
-    $('#raincalendar_container').RainCalendar();
+require(["target-jquery","domEngine","target-window"], function(w,$) {
+
+    $('#demo_jquery').rainCalendar();
+    var c = RainCalendar.calenderize($('#demo_window'));
+    console.log(c);
 //   var calendar = RainCalendar.calenderize('#raincalendar_container', {
 //       lang: "it",
 //       numberOfMonths :3,

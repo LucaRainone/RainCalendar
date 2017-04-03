@@ -1,7 +1,7 @@
-define(['RainCalendar'], function(rainCalendarExport) {
-    if(jQuery) {
+define('target-jquery',['RainCalendar'], function(rainCalendarExport) {
+    jQuery && (
         jQuery.fn.rainCalendar = function(options) {
-            rainCalendarExport.calenderize(this, options)
-        };
-    }
+            return rainCalendarExport.calenderize(this, options)
+        }
+    );
 });
