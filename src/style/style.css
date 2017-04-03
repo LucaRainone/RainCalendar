@@ -1,0 +1,150 @@
+.rain_calendar_container {
+    background-color: transparent
+}
+
+
+table.rain_calendar {
+    border-collapse: separate;
+    border-spacing: 3px;
+    margin-right: 10px;
+    display: inline-block;
+    user-select: none; /* CSS3 (little to no support) */
+    -ms-user-select: none; /* IE 10+ */
+    -moz-user-select: none; /* Gecko (Firefox) */
+    -webkit-user-select: none; /* Webkit (Safari, Chrome) */
+
+}
+
+table.rain_calendar:last-child {
+    margin-right: 0
+}
+
+table.rain_calendar thead tr:first-child th {
+    background-color: #fff;
+    color: #717070
+}
+
+table.rain_calendar .selected {
+    background-color: #b5b5b8;
+    color: #000 !important
+}
+
+table.rain_calendar .temp_disabled {
+    color: #cdcdcd !important
+}
+
+table.rain_calendar tr td {
+    background-color: #ffffff;
+    color: #717070
+}
+
+table.rain_calendar tr th {
+    background-color: #eff0f0;
+    color: #717070
+}
+
+table.rain_calendar .today {
+    font-weight: normal
+}
+
+table.rain_calendar .disabled {
+    color: #afafaf !important;
+    cursor: not-allowed !important;
+}
+
+
+table.rain_calendar .prev-month, table.rain_calendar .next-month {
+    color: #efefef !important;
+    cursor: default;
+    background-color: #eff0f0
+}
+
+
+.rain_calendar tr td:last-child,
+.rain_calendar tr th:last-child,
+.rain_calendar tr th:nth-child(6),
+.rain_calendar tr td:nth-child(6)
+{
+    color: #d8741f;
+    text-align: center
+}
+
+.rain_calendar tr td,  .rain_calendar tr th {
+    padding: 3px;
+    text-align: center !important;
+    cursor: default;
+    border: none;
+    vertical-align: middle;
+    width: 30px;
+    height: 20px
+}
+.rain_calendar th.arrow-right {
+    text-align: right !important;
+}
+.rain_calendar .arrow-right span{
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-left-color: #c4c5c5;
+    position: relative;
+    right: -25px;
+
+}
+
+.rain_calendar th.arrow-left {
+    text-align: left !important;
+}
+.rain_calendar .arrow-left span{
+
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-right-color: #c4c5c5;
+    position: relative;
+    left: -10px;
+}
+
+.rain_calendar:first-child .arrow-left span,
+.rain_calendar:last-child .arrow-right span
+{
+    display: block;
+    cursor:pointer;
+}
+
+
+.rain_calendar thead tr:first-child th, .rain_calendar thead tr:first-child th {
+    padding: 5px 0;
+    font-weight: normal;
+    font-size: 15px;
+    height: 30px
+}
+
+.rain_calendar thead tr:last-child th {
+    font-weight: normal;
+    font-size: 12px;
+    padding-bottom: 10px
+}
+
+.rain_calendar .emptyrow {
+    visibility: hidden
+}
+
+.rain_calendar.interactive tr td:hover:not(.disabled) {
+    text-decoration: underline;
+    cursor: pointer
+}
+
+
+
+.rangestart {
+    background-color:red !important;
+}
+
+.disabled-for-range {
+    color: #afafaf !important;
+    cursor: not-allowed !important;
+    text-decoration: line-through;
+}
+.enable-for-range {
+    background-color: #defff1 !important;
+}

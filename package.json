@@ -1,0 +1,30 @@
+{
+  "name": "RainCalendar",
+  "version": "0.9.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: TODO test\" && exit 1"
+  },
+  "author": "Luca Rainone",
+  "_config": {
+    "directories": {
+      "dist": "dist",
+      "src": "src",
+      "core" : "src/core"
+    }
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-header": "^1.8.8",
+    "gulp-load-plugins": "^1.3.0",
+    "gulp-requirejs-optimize": "^1.2.0",
+    "gulp-uglify": "*",
+    "jquery": "^3.1.1",
+    "requirejs": "^2.3.2",
+    "yargs": "^7.0.2"
+  }
+}
