@@ -72,7 +72,6 @@ define(["domEngine"], function ($) {
                 $tr   = $tr.clone().empty();
                 count = 0;
             }
-            // $tr.append($('<td/>').html("<span>"+i+"</span>").attr("data-day", i).addClass("day-" + ((count + options.weekStart) % 7)));
             $tr.append($('<td/>').append($("<span/>").html(i)).attr("data-day", i).addClass("day-" + ((count + options.weekStart) % 7)));
             count++;
         }

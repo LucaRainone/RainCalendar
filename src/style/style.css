@@ -29,10 +29,6 @@ table.rain_calendar .selected {
     color: #000 !important
 }
 
-table.rain_calendar .temp_disabled {
-    color: #cdcdcd !important
-}
-
 table.rain_calendar tr td {
     background-color: #ffffff;
     color: #717070
@@ -48,8 +44,9 @@ table.rain_calendar .today {
 }
 
 table.rain_calendar .disabled {
-    color: #afafaf !important;
+    opacity: .4;
     cursor: not-allowed !important;
+
 }
 
 
@@ -59,15 +56,6 @@ table.rain_calendar .prev-month, table.rain_calendar .next-month {
     background-color: #eff0f0
 }
 
-
-.rain_calendar tr td:last-child,
-.rain_calendar tr th:last-child,
-.rain_calendar tr th:nth-child(6),
-.rain_calendar tr td:nth-child(6)
-{
-    color: #d8741f;
-    text-align: center
-}
 
 .rain_calendar tr td,  .rain_calendar tr th {
     padding: 3px;
@@ -147,4 +135,9 @@ table.rain_calendar .prev-month, table.rain_calendar .next-month {
 }
 .enable-for-range {
     background-color: #defff1 !important;
+}
+
+table.rain_calendar tr td.day-0 {
+    color: #d8741f;
+    text-align: center
 }

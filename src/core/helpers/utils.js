@@ -126,10 +126,11 @@ define(function() {
             if (this.isArray(dates)) {
                 for (i = 0; i < dates.length; i++) {
                     if (!this.isArray(dates[i])) {
+                        console.log("oooo")
                         ret[i] =  [this.normalizeDate(dates[i])];
                     }else {
                         ret[i] = [];
-                        for (j = 0; j < dates[i].length; j++) {
+                        for (j = 0; j < 2; j++) {
                             ret[i][j] = this.normalizeDate(dates[i][j]);
                             if(j === 1 && this.date2string(ret[i][0]) > this.date2string(ret[i][j])) {
                                 throw "inverted ranges";
@@ -142,6 +143,15 @@ define(function() {
                 ret = [[this.normalizeDate(dates)]];
             }
             return ret;
+        },
+        functionize : function(value) {
+            if(typeof value !== "function") {
+                var scalar = value;
+                value = function() {
+                    return scalar;
+                }
+            }
+            return value;
         }
     }
 });

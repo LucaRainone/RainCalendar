@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RainCalendar</title>
+    <link rel="stylesheet" href="../src/style/style.css">
+    <script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
+    <script type="text/javascript">
+        requirejs.config({
+                             baseUrl : '../src/core',
+                             paths   : {
+                                 jquery          : '../../node_modules/jquery/dist/jquery.min',
+                                 domEngine       : '../domEngine/jquery',
+                                 "target-window" : '../target/target-window',
+                                 "target-jquery" : '../target/target-jquery'
+                             }
+                         });
+    </script>
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <style type="text/css">
+        pre {
+            background-color: #efefef;
+            padding: 20px;
+
+        }
+    </style>
+</head>
+<body>
+
+<h2>Pure javascript object</h2>
+<pre data-function="demoAsJQuery">
+
+</pre>
+<div id="demo_jquery" class="rain_calendar_container">
+
+</div>
+
+<script type="text/javascript">
+    require([ "target-jquery"], function () {
+        demoAsJQuery();
+    });
+
+</script>
+<script type="text/javascript" id="js-jquery">
+
+    function demoAsJQuery() {
+
+        var currentView = new Date();
+
+        var calendar = $('#demo_jquery').rainCalendar({
+            /*
+             * numberOfMonths depending of screen width
+             */
+            numberOfMonths : function () {
+                return Math.floor(window.innerWidth / 300);
+            },
+            startDate : currentView,
+            disabledDates: [["--","yesterday"]]
+        });
+
+        $(window).on('resize', calendar.ui().redraw);
+
+    }
+
+    $('[data-function]').each(function () {
+        var fName = $(this).attr("data-function");
+        eval('var str = ' + fName + '.toString();');
+        var lines = str.split("\n");
+        lines.pop();
+        lines.pop();
+        lines.shift();
+        lines.shift();
+        str = lines.join("\n").replace(/^(\t{2})/g, "");
+        $(this).html(str);
+    });
+</script>
+
+</body>
+</html>

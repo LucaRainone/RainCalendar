@@ -112,6 +112,13 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
                _syncSelected($el, api);
            };
 
+            var _setOption = function(options, option, value) {
+                if(option === "numberOfMonths") {
+                    value = utils.functionize(value);
+                }
+                options[option] = value;
+
+            };
 
 
            return {
@@ -123,8 +130,7 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
                    options = utils.extend(
                        {
                            numberOfMonths : 1,
-                           startDate      : new Date(),
-                           disabledDates  : []
+                           startDate      : new Date()
                        }
                        , options
                    );
@@ -141,12 +147,25 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
                        }
                    };
 
-                   if (typeof options.numberOfMonths !== 'function') {
-                       var value              = options.numberOfMonths;
-                       options.numberOfMonths = function () {
-                           return value;
+                   var _redraw = function() {
+                       _see($el, currentDate, locale, options);
+                       _sync($el, api);
+
+                       for(var className in taggedDays) {
+                           $el.find("." + className).removeClass(className);
+                           _syncMonth($el, taggedDays[className], function (d) {
+                               _addClassToDate($el, d, className);
+                           }, function (d) {
+                               _addClassToMonth($el, d, className);
+                           });
                        }
-                   }
+                       _callback('viewChange', ui);
+                   };
+
+                   var taggedDays = {};
+
+                    _setOption(options, "numberOfMonths", options.numberOfMonths);
+
                    var $el = $(element);
 
 
@@ -156,17 +175,13 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
 
                    $el.on('click', '.arrow-right', function () {
                        currentDate.setMonth(currentDate.getMonth() + 1);
-                       _see($el, currentDate, locale, options);
-                       _sync($el, api);
-                       _callback('viewChange', ui);
+                       _redraw();
 
                    });
 
                    $el.on('click', '.arrow-left', function () {
                        currentDate.setMonth(currentDate.getMonth() - 1);
-                       _see($el, currentDate, locale, options);
-                       _sync($el, api);
-                       _callback('viewChange', ui);
+                       _redraw();
                    });
 
                    $el.on('click', 'td[data-day]:not(.disabled)', function (ev) {
@@ -196,6 +211,7 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
 
                    ui.tagDatesAs = function (ranges, className) {
                        ranges = utils.normalizeDates(ranges);
+                       taggedDays[className] = ranges;
                        $el.find("." + className).removeClass(className);
                        _syncMonth($el, ranges, function (d) {
                            _addClassToDate($el, d, className);
@@ -207,6 +223,20 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
                    ui.onViewChange = function(cbk) {
                         _listeners.viewChange.push(cbk);
                    };
+
+                   ui.redraw = function() {
+                       _redraw();
+                   };
+
+                   ui.setOption = function(option, value) {
+                       _setOption(options, option, value);
+                   };
+
+                   ui.showDate = function(date) {
+                       currentDate = utils.normalizeDate(date);
+                       _redraw();
+                   };
+
 
                    return ui;
                }

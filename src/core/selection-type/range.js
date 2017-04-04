@@ -74,7 +74,7 @@ define(["helpers/utils"], function (utils) {
                 } else {
                     selection.unshift(d);
                 }
-
+// TODO add class to table and manage one class only
                 currentRangeStart = [];
                 api.select([selection]);
                 currentDisabledForRange  = [];
@@ -83,20 +83,14 @@ define(["helpers/utils"], function (utils) {
             }
 
         });
-        ui.onViewChange(function() {
-            _syncTags(ui, currentDisabledForRange, currentEnabledForRange, currentRangeStart);
-        });
 
-        var subApi = {
-            select  : function (d) {
-                if (!utils.isArray(d)) {
-                    throw "In range mode, the select method accept only array";
-                }
-            },
-            disable : api.disable
-
+        var backupSelect = api.select;
+        api.select = function (d) {
+            if (!utils.isArray(d)) {
+                throw "In range mode, the select method accept only array";
+            }
+            backupSelect(d);
         };
-
-        return subApi;
+        return api;
     }
 });
