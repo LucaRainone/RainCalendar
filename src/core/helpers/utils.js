@@ -126,7 +126,6 @@ define(function() {
             if (this.isArray(dates)) {
                 for (i = 0; i < dates.length; i++) {
                     if (!this.isArray(dates[i])) {
-                        console.log("oooo")
                         ret[i] =  [this.normalizeDate(dates[i])];
                     }else {
                         ret[i] = [];

@@ -73,7 +73,24 @@
 
         window.addEventListener('resize', calendar.ui().redraw);
 //        calendar.ui().tagDatesAs(["today", "tomorrow"], "important-meeting");
-        calendar.ui().tagDatesAs(["2018-01-01", "2018-12-25"], "party");
+
+        calendar.ui().onViewChange(function() {
+            var range = calendar.ui().getViewRange();
+
+            var disabledDates = [];
+            while(range[0] <= range[1]) {
+                if(range[0].getDay() === 3) {
+                    disabledDates.push(new Date(range[0]));
+                }
+                range[0].setDate(range[0].getDate()+1);
+            }
+
+            calendar.disable(disabledDates)
+        });
+        calendar.ui().tagDatesAs(function(d) {
+            // all christmas
+            return d.getDate()=== 25 && d.getMonth() === 11;
+        }, "party");
 
     }
 

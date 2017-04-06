@@ -141,3 +141,11 @@ table.rain_calendar tr td.day-0 {
     color: #d8741f;
     text-align: center
 }
+
+.selected.selected-range-start {
+    border-radius: 10px 0 0 10px;
+}
+
+.selected.selected-range-end {
+    border-radius: 0 10px 10px 0;
+}

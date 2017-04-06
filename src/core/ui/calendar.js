@@ -36,47 +36,60 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
            };
 
            var _syncMonth    = function ($el, selectedDates, callbackDay, callbackMonth) {
+                if(typeof selectedDates === "function") {
+                    $el.find("[data-month-year]").each(function () {
+                        var monthYear = $(this).attr("data-month-year").split("-");
+                        $(this).find("td[data-day]").each(function () {
+                            var cday = new Date(monthYear[1], monthYear[0], $(this).attr("data-day"));
+                            if(selectedDates(cday)) {
+                                callbackDay(cday);
+                            }
+                        })
+                    });
+                }else {
+                    $el.find("table[data-month-year]").each(function () {
 
-               $el.find("table[data-month-year]").each(function () {
+                        var monthYear = $(this).attr("data-month-year").split("-");
+                        monthYear     = [+monthYear[0], +monthYear[1]];
+                        for (var i = 0; i < selectedDates.length; i++) {
+                            if (selectedDates[i].length === 1) {
+                                if (selectedDates[i][0].getMonth() === monthYear[0] && selectedDates[i][0].getFullYear() === monthYear[1]) {
 
-                   var monthYear = $(this).attr("data-month-year").split("-");
-                   monthYear     = [+monthYear[0], +monthYear[1]];
-                   for (var i = 0; i < selectedDates.length; i++) {
-                       if (selectedDates[i].length === 1) {
-                           if (selectedDates[i][0].getMonth() === monthYear[0] && selectedDates[i][0].getFullYear() === monthYear[1]) {
+                                    callbackDay(selectedDates[i][0]);
+                                }
+                            } else if (selectedDates[i].length === 2) {
+                                // range
+                                var startDate = utils.date2string(selectedDates[i][0]);
+                                var endDate   = utils.date2string(selectedDates[i][1]);
 
-                               callbackDay(selectedDates[i][0]);
-                           }
-                       } else if (selectedDates[i].length === 2) {
-                           var startDate = utils.date2string(selectedDates[i][0]);
-                           var endDate   = utils.date2string(selectedDates[i][1]);
+                                var firstDate = utils.date2string(utils.normalizeDate(monthYear[1], monthYear[0], 1));
+                                var lastDate  = utils.normalizeDate(monthYear[1], monthYear[0], 1);
+                                lastDate.setMonth(lastDate.getMonth() + 1);
+                                lastDate.setDate(0);
+                                lastDate = utils.date2string(lastDate);
 
-                           var firstDate = utils.date2string(utils.normalizeDate(monthYear[1], monthYear[0], 1));
-                           var lastDate  = utils.normalizeDate(monthYear[1], monthYear[0], 1);
-                           lastDate.setMonth(lastDate.getMonth() + 1);
-                           lastDate.setDate(0);
-                           lastDate = utils.date2string(lastDate);
+                                if (lastDate >= startDate && firstDate <= endDate) {
+                                    var currentDate = utils.normalizeDate(monthYear[1], monthYear[0], 1);
+                                    if (callbackMonth && firstDate >= startDate && lastDate <= endDate) {
+                                        // whole month
+                                        callbackMonth(currentDate);
+                                    } else {
+                                        while (+monthYear[0] === +currentDate.getMonth()) {
 
-                           if (lastDate >= startDate && firstDate <= endDate) {
-                               var currentDate = utils.normalizeDate(monthYear[1], monthYear[0], 1);
-                               if(callbackMonth && firstDate >= startDate && lastDate <= endDate) {
-                                   // whole month
-                                   callbackMonth(currentDate);
-                               }else {
-                                   while (+monthYear[0] === +currentDate.getMonth()) {
-                                       var cdate = utils.date2string(currentDate);
-                                       if (cdate >= startDate && cdate <= endDate) {
-                                           callbackDay(currentDate);
-                                       }
-                                       currentDate.setDate(currentDate.getDate() + 1);
-                                   }
-                               }
-                           }
-                       }
-                   }
+                                            var cdate = utils.date2string(currentDate);
+                                            if (cdate >= startDate && cdate <= endDate) {
+                                                callbackDay(currentDate);
+                                            }
+                                            currentDate.setDate(currentDate.getDate() + 1);
+                                        }
+                                    }
+                                }
+                            }
+                        }
 
 
-               });
+                    });
+                }
            };
            var _addClassToMonth = function($el, d, className) {
 
@@ -89,12 +102,20 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
            var _syncSelected = function ($el, api) {
                var selectedDates = api.getSelectedDates();
                $el.find(".selected").removeClass("selected");
+               $el.find(".selected-range-start").removeClass("selected-range-start");
+               $el.find(".selected-range-end").removeClass("selected-range-end");
 
                _syncMonth($el, selectedDates, function (d) {
                    _addClassToDate($el, d, "selected");
                },function(d) {
                    _addClassToMonth($el, d, "selected");
                });
+               for(var i = 0; i < selectedDates.length; i++) {
+                   if(selectedDates[i].length === 2) {
+                       _addClassToDate($el, selectedDates[i][0], "selected-range-start");
+                       _addClassToDate($el, selectedDates[i][1], "selected-range-end");
+                   }
+               }
 
            };
            var _syncDisabled = function ($el, api) {
@@ -210,7 +231,9 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
                    };
 
                    ui.tagDatesAs = function (ranges, className) {
-                       ranges = utils.normalizeDates(ranges);
+                       if(typeof ranges !== "function") {
+                           ranges = utils.normalizeDates(ranges);
+                       }
                        taggedDays[className] = ranges;
                        $el.find("." + className).removeClass(className);
                        _syncMonth($el, ranges, function (d) {
@@ -237,6 +260,15 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
                        _redraw();
                    };
 
+                   ui.getViewRange = function() {
+                       // clone it
+                       var startDate = utils.normalizeDate(currentDate);
+                       startDate.setDate(1);
+                       var endDate = utils.normalizeDate(startDate);
+                       var nMonth = options.numberOfMonths();
+                       endDate.setMonth(endDate.getMonth()+nMonth);
+                       return [startDate, endDate];
+                   };
 
                    return ui;
                }
