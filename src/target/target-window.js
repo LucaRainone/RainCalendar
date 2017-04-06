@@ -1,3 +1,3 @@
-define('target-window',['RainCalendar'], function(rainCalendarExport) {
+define(['RainCalendar'], function(rainCalendarExport) {
     !function(global){global.RainCalendar = rainCalendarExport}(this);
 });
