@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RainCalendar</title>
+    <link rel="stylesheet" href="../src/style/style.css">
+    <script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
+    <script type="text/javascript" src="../dist/RainCalendar.AMD-named.min.js"></script>
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <style type="text/css">
+        pre {
+            background-color: #efefef;
+            padding: 20px;
+
+        }
+    </style>
+
+    <style type="text/css">
+        .party {
+            background-color: red !important;
+            color:white;
+        }
+        .important-meeting {
+            background-color: green !important;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Pure javascript object (minified version)</h2>
+<pre data-function="demoAsRequire">
+
+</pre>
+<div id="demo_window" class="rain_calendar_container">
+
+</div>
+
+
+<script type="text/javascript">
+
+    demoAsRequire();
+    function demoAsRequire() {
+
+        require(["RainCalendar"], function(Calendar) {
+            var currentView = new Date();
+
+            var calendar = Calendar('#demo_window', {
+                /*
+                 * numberOfMonths depending of screen width
+                 */
+                numberOfMonths : function () {
+                    return Math.floor(window.innerWidth / 300);
+                },
+                startDate : currentView,
+                disabledDates: [["--","yesterday"]],
+                weekStart: 1,
+                selectionType: Calendar.SELECTION_TYPE.RANGE
+            });
+
+            calendar.ui().tagDatesAs(["today", "tomorrow"], "important-meeting");
+            calendar.ui().tagDatesAs(["2018-01-01", "2018-12-25"], "party");
+
+
+            window.addEventListener('resize', calendar.ui().redraw);
+        });
+
+
+    }
+
+    $('[data-function]').each(function () {
+        var fName = $(this).attr("data-function");
+        eval('var str = ' + fName + '.toString();');
+        var lines = str.split("\n");
+        lines.pop();
+        lines.pop();
+        lines.shift();
+        lines.shift();
+        str = lines.join("\n").replace(/^(\t{2})/g, "");
+        $(this).html(str);
+    });
+</script>
+
+</body>
+</html>
