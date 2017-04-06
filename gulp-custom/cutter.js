@@ -1,5 +1,5 @@
 var allDefs   = {};
-var prefixVar         = "_rain1_";
+var prefixVar         = "_rai"+Math.floor(Math.random()*9999)+"n1_";
 var globalCounterVars = 0;
 var exportName = "RainCalendar";
 
