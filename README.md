@@ -6,7 +6,7 @@ A minmimalist calendar in pure Javascript.
 
 ### window
  
- loading `RainCalendar.min.js` you have available the RainCalendar function as `window` property
+ Loading `RainCalendar.min.js` you have available the RainCalendar function as `window` property
  ```javascript
  // example
  RainCalendar('#calendar', {
@@ -15,7 +15,7 @@ A minmimalist calendar in pure Javascript.
  ```
 ### jQuery
  
- loading `RainCalendar.jquery.min.js` you have available the object as jQuery plugin `rainCalendar`
+ Loading `RainCalendar.jquery.min.js` you have available the object as jQuery plugin `rainCalendar`
   ```javascript
   // example
  $('#calendar').rainCalendar({
@@ -24,7 +24,7 @@ A minmimalist calendar in pure Javascript.
   ```
 ### AMD
   
-  loading `RainCalendar.AMD.min.js`you have available the object as AMD module
+  Loading `RainCalendar.AMD.min.js` you have available the object as AMD module
   
    ```javascript
    // example
@@ -37,7 +37,7 @@ A minmimalist calendar in pure Javascript.
    
 ### Named AMD
  
- loading `RainCalendar.AMD-named.min.js`you have available the object as AMD module with name "RainCalendar"
+ Loading `RainCalendar.AMD-named.min.js` you have available the object as AMD module with name "RainCalendar"
  
   ```javascript
   // example
