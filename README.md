@@ -1,12 +1,16 @@
 # RainCalendar
 
-A minmimalist calendar in pure Javascript. 
+A minmimalist and hackable calendar in **pure Javascript**. 
+
+**In dist folder you have different version based on your needs.**
+
+Choose your favorite:
 
 ## Target
 
 ### window
  
- Loading `RainCalendar.min.js` you have available the RainCalendar function as `window` property
+ `RainCalendar.min.js` if you want to use it as simple function
  ```javascript
  // example
  RainCalendar('#calendar', {
@@ -15,7 +19,7 @@ A minmimalist calendar in pure Javascript.
  ```
 ### jQuery
  
- Loading `RainCalendar.jquery.min.js` you have available the object as jQuery plugin `rainCalendar`
+ `RainCalendar.jquery.min.js` if you want to use it as jQuery plugin named `rainCalendar`
   ```javascript
   // example
  $('#calendar').rainCalendar({
@@ -24,7 +28,7 @@ A minmimalist calendar in pure Javascript.
   ```
 ### AMD
   
-  Loading `RainCalendar.AMD.min.js` you have available the object as AMD module
+ `RainCalendar.AMD.min.js` if you want to use it as AMD module
   
    ```javascript
    // example
@@ -37,7 +41,7 @@ A minmimalist calendar in pure Javascript.
    
 ### Named AMD
  
- Loading `RainCalendar.AMD-named.min.js` you have available the object as AMD module with name "RainCalendar"
+`RainCalendar.AMD-named.min.js` if you want to use it as AMD module with fixed name "RainCalendar"
  
   ```javascript
   // example
