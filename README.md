@@ -1,37 +1,37 @@
 # RainCalendar
 
-A minmimalist and hackable calendar in **pure Javascript**. 
+A minimalist and hackable calendar in **pure Javascript**. 
 
-**In dist folder you have different version based on your needs.**
+**``dist`` folder contains different versions. Pick the one you need!**
 
-Choose your favorite:
+## Available versions (targets):
 
-## Target
-
-### window
+### Standard javascript function
  
- `RainCalendar.min.js` if you want to use it as simple function
+Including `RainCalendar.min.js` allows you to access RainCalendar as a standard javascript object.
+ 
+Example:
  ```javascript
- // example
  RainCalendar('#calendar', {
     startDate: new Date()
  });
  ```
-### jQuery
+### jQuery plugin
  
- `RainCalendar.jquery.min.js` if you want to use it as jQuery plugin named `rainCalendar`
+Including `RainCalendar.jquery.min.js` makes a jQuery plugin named `rainCalendar` available.
+ 
+Example:
   ```javascript
-  // example
  $('#calendar').rainCalendar({
     startDate: new Date()
  });
   ```
-### AMD
+### AMD module
   
- `RainCalendar.AMD.min.js` if you want to use it as AMD module
-  
+Including `RainCalendar.AMD.min.js` makes an AMD module available.
+
+Example:
    ```javascript
-   // example
   define(["path/your/lib/RainCalendar-AMD.min"], function(calendar) {
     calendar('#calendar', {
         startDate: new Date()
@@ -39,12 +39,12 @@ Choose your favorite:
   });
    ```
    
-### Named AMD
+### Named AMD module
  
-`RainCalendar.AMD-named.min.js` if you want to use it as AMD module with fixed name "RainCalendar"
- 
+Including `RainCalendar.AMD-named.min.js` allows the usage as AMD module with fixed name "RainCalendar".
+
+Example:
   ```javascript
-  // example
  define(["RainCalendar"], function(calendar) {
    calendar('#calendar', {
        startDate: new Date()
