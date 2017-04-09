@@ -33,24 +33,22 @@ define(function() {
         },
         splitRange: function(range, d) {
             var begin = new Date(range[0]);
-            var end = new Date(range[1]);
-            if(d > end || d < begin) {
-                return range;
+            var end   = new Date(range[1]);
+            var point = this.date2string(d);
+            if (point > this.date2string(end) || point < this.date2string(begin)) {
+                return [[this.normalizeDate(begin), this.normalizeDate(end)], null];
             }
             var mid1 = this.getDateAddingDays(d, -1);
             var mid2 = this.getDateAddingDays(d, 1);
 
-            return [[begin, mid1], [mid2, end]];
+            return [+mid1 > +begin ? [begin, mid1] : null, mid2 < end ? [mid2, end] : null];
 
         },
+
         overlaps : function(dateOrRange1, dateOrRange2) {
             var i,j, c1, c2;
-            if(dateOrRange1 instanceof Date) {
-                dateOrRange1 = [dateOrRange1];
-            }
-            if(dateOrRange2 instanceof Date) {
-                dateOrRange2 = [dateOrRange2];
-            }
+            dateOrRange1 = this.normalizeDates(dateOrRange1);
+            dateOrRange2 = this.normalizeDates(dateOrRange2);
             for( i = 0; i < dateOrRange1.length; i++) {
                 if(dateOrRange1[i] instanceof Date) {
                     c1 = [dateOrRange1[i], dateOrRange1[i]];
