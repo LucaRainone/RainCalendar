@@ -28,32 +28,45 @@
         }
     </style>
     <style type="text/css">
-        .party {
-            background-color: red !important;
-            color:white;
+        .party span {
+            border: 1px solid red;
         }
-        .important-meeting {
-            background-color: green !important;
+        .important-meeting span {
+            position:relative;
+        }
+        .important-meeting span:after {
+            content:"";
+            display:block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid green;
+            border-radius: 15px;
+            position: absolute;
+            top:50%;
+            left:50%;
+            margin-top: -15px;
+            margin-left: -15px;
+            box-sizing: border-box;
         }
     </style>
 </head>
 <body>
 
 <h2>Pure javascript object</h2>
-<pre data-function="demoAsVanilla">
 
-</pre>
 <div id="demo_window" class="rain_calendar_container">
 
 </div>
+<pre data-function="demoAsVanilla">
 
+</pre>
 <script type="text/javascript">
     require([ "target-window"], function () {
         demoAsVanilla();
     });
 
 </script>
-<script type="text/javascript" id="js-jquery">
+<script type="text/javascript">
 
     function demoAsVanilla() {
 
@@ -72,9 +85,9 @@
         });
 
         window.addEventListener('resize', calendar.ui().redraw);
-//        calendar.ui().tagDatesAs(["today", "tomorrow"], "important-meeting");
+        calendar.ui().tagDatesAs(["today", "tomorrow"], "important-meeting");
 
-        calendar.ui().onViewChange(function() {
+        var dynamicDisable = function() {
             var range = calendar.ui().getViewRange();
 
             var disabledDates = [];
@@ -86,7 +99,9 @@
             }
 
             calendar.disable(disabledDates)
-        });
+        };
+        dynamicDisable();
+        calendar.ui().onViewChange(dynamicDisable);
         calendar.ui().tagDatesAs(function(d) {
             // all christmas
             return d.getDate()=== 25 && d.getMonth() === 11;
