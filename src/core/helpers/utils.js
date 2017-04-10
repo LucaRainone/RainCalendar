@@ -127,7 +127,7 @@ define(function() {
                         ret[i] =  [this.normalizeDate(dates[i])];
                     }else {
                         ret[i] = [];
-                        for (j = 0; j < 2; j++) {
+                        for (j = 0; j < dates[i].length; j++) {
                             ret[i][j] = this.normalizeDate(dates[i][j]);
                             if(j === 1 && this.date2string(ret[i][0]) > this.date2string(ret[i][j])) {
                                 throw "inverted ranges";
