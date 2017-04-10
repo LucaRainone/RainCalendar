@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+    <title>Jasmine Spec Runner</title>
+    <link rel="stylesheet" href="../../node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+</head>
+<body>
+<script src="../../node_modules/requirejs/require.js"></script>
+<script type="text/javascript">
+    // Requirejs Configuration Options
+    require.config({
+                       baseUrl : '../../src/core',
+                       paths   : {
+                           'jasmine'      : ['../../node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine'],
+                           'jasmine-html' : ['../../node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine-html'],
+                           'jasmine-boot' : ['../../node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/boot']
+                       },
+                       shim    : {
+                           'jasmine-html' : {
+                               deps : ['jasmine']
+                           },
+                           'jasmine-boot' : {
+                               deps : ['jasmine', 'jasmine-html']
+                           }
+                       }
+                   });
+</script>
+<script type="text/javascript">
+    require(['jasmine-boot'], function (j) {
+        require(
+            [
+                '../../tests/spec/core/helpers/utilsTest'
+            ],
+            function () {
+                window.onload();
+            }
+        );
+    });
+
+</script>
+</body>
+</html>

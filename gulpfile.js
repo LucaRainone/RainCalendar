@@ -96,6 +96,31 @@ gulp.task('build-all', function (done) {
     runSequence.apply(this, tasks);
 });
 
+
+
+gulp.task('test', function() {
+    var jasmine = require('gulp-jasmine');
+
+    return gulp.src('./tests/spec/jasmine.js')
+
+    .pipe(jasmine({verbose:true}));
+});
+
+gulp.task('test-coverage', function() {
+    var jasmine = require('gulp-jasmine');
+    var cover = require('gulp-coverage');
+
+
+    var format = argv.lcov? {reporter: 'lcov'} : {};
+
+    return gulp.src('./tests/spec/jasmine.js')
+    .pipe(cover.instrument({pattern: ['src/core/**/*.js', '!src/core/locale/*.js']}))
+    .pipe(jasmine({verbose:true}))
+    .pipe(cover.gather())
+    .pipe(cover.format(format))
+    .pipe(gulp.dest('reports'));
+});
+
 // defaault task
 gulp.task('default', ['build-all']);
 

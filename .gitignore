@@ -33,3 +33,6 @@ typings/
 *.tgz
 .yarn-integrity
 .env
+reports/
+.coverdata/
+.coverrun
