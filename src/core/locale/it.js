@@ -5,6 +5,6 @@ define(function () {
         "shortMonths" : ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"],
         "days"        : ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"],
         "shortDays"   : ["dom", "lun", "mar", "mer", "gio", "ven", "sab"],
-        "format"      : "dd/mm/YYYY"
+        "format"      : "d/m/Y"
     }
 });

@@ -55,11 +55,7 @@ function build(targetName) {
         }
     ))
     .pipe(plugins.concat(distName))
-    .pipe(definerCutter(
-        {
-            exportName : pkg.name
-        }
-    ))
+    .pipe(definerCutter())
     .pipe(plugins.uglify(
         {
             compress : {
@@ -111,13 +107,11 @@ gulp.task('test-coverage', function() {
     var cover = require('gulp-coverage');
 
 
-    var format = argv.lcov? {reporter: 'lcov'} : {};
-
     return gulp.src('./tests/spec/jasmine.js')
     .pipe(cover.instrument({pattern: ['src/core/**/*.js', '!src/core/locale/*.js']}))
     .pipe(jasmine({verbose:true}))
     .pipe(cover.gather())
-    .pipe(cover.format(format))
+    .pipe(cover.format( ['lcov','html','json']))
     .pipe(gulp.dest('reports'));
 });
 

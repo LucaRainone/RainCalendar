@@ -5,6 +5,6 @@ define(function () {
         "shortMonths" : ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
         "days"        : ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
         "shortDays"   : ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-        "format"      : "dd.mm.YYYY"
+        "format"      : "d.m.Y"
     }
 });

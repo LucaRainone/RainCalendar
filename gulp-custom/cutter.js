@@ -1,12 +1,13 @@
 var allDefs   = {};
 var prefixVar         = "_rai"+Math.floor(Math.random()*9999)+"n1_";
 var globalCounterVars = 0;
-var exportName = "RainCalendar";
+var exportName;
 
 
 module.exports = {
     defineCutter: function(contents, opt) {
-        exportName = opt.exportName;
+        if(!opt) opt = {};
+        exportName = opt.exportName ? opt.exportName : null;
         (function(define) {
             global.define = define;
             eval("var define = "+define.toString()+";\n"+contents);
@@ -55,8 +56,8 @@ module.exports = {
         while (fnc = strFuncDeps.shift()) {
             output = output.split("(/*__MODULES__*/)").join(fnc);
         }
-
-        output = "!function(global) {"+output.split("(/*__MODULES__*/)").join("")+"}(this);";
+        var exportCode = exportName? "global."+exportName+" = arguments[0]" : "";
+        output = "!function(global) {"+output.split("(/*__MODULES__*/)").join(exportCode)+"}(this);";
 
         return output;
     }
