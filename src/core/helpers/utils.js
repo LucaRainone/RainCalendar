@@ -36,7 +36,7 @@ define(function() {
             var end   = new Date(range[1]);
             var point = this.date2string(d);
             if (point > this.date2string(end) || point < this.date2string(begin)) {
-                return [[this.normalizeDate(begin), this.normalizeDate(end)], null];
+                return [null,null];
             }
             var mid1 = this.getDateAddingDays(d, -1);
             var mid2 = this.getDateAddingDays(d, 1);
