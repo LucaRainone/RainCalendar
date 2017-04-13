@@ -88,6 +88,11 @@ define(
                     subApi = typeMultiple($el, options, api);
                     break;
                 default :
+                    if (additionalSelectionTypes[options.selectionType]) {
+                        subApi = additionalSelectionTypes[options.selectionType]($el, options, api);
+                    } else {
+                        throw "no SelectionType registered as '" + options.selectionType + "'";
+                    }
 
             }
             api.disable(options.disabledDates);
@@ -102,7 +107,7 @@ define(
             locale[code] = obj;
         };
         RainCalendar.registerUI            = function (name, ui) {
-            additionalUis[name] = ui;
+            additionalUis[name] = ui();
         };
         RainCalendar.registerSelectionType = function (name, selectionType) {
             additionalSelectionTypes[name] = selectionType;
@@ -112,6 +117,7 @@ define(
         };
         RainCalendar.UI                    = UI;
         RainCalendar.SELECTION_TYPE        = SELECTION_TYPE;
+        RainCalendar.utils        = utils;
 
         return RainCalendar;
     }

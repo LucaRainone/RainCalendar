@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RainCalendar</title>
+    <link rel="stylesheet" href="../../src/style/style.css">
+    <script type="text/javascript" src="../../node_modules/requirejs/require.js"></script>
+    <script type="text/javascript">
+        requirejs.config({
+                             baseUrl : '../../src/core',
+                             paths   : {
+                                 jquery          : '../../../node_modules/jquery/dist/jquery.min',
+                                 domEngine : '../domEngine/jquasi',
+                                 "target-window" : '../../target/target-window',
+                                 "target-jquery" : '../../target/target-jquery'
+                             }
+                         });
+    </script>
+    <script type="text/javascript" src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <style type="text/css">
+        pre {
+            background-color: #efefef;
+            padding: 20px;
+
+        }
+    </style>
+
+    <style type="text/css">
+        table.raincalendar-week {
+            border-collapse:collapse;
+            border-spacing:0;
+        }
+        table.raincalendar-week tr th:first-child {
+            width: 50px;
+        }
+        table.raincalendar-week tr th {
+            max-width: 130px;
+            width: 130px;
+        }
+        table.raincalendar-week tr td:first-child div {
+            height: 40px;
+            line-height: 40px;
+            text-align:center;
+        }
+        table.raincalendar-week tr td {
+            margin:0;
+            padding:0;
+            cursor: pointer;
+        }
+        table.raincalendar-week tr td div {
+            border: 1px solid #dadada;
+            width:100%;
+            height: 20px;
+
+            box-sizing: border-box;
+        }
+        table.raincalendar-week tr td div:hover {
+            background-color: yellow;
+        }
+        table.raincalendar-week tr td div:nth-child(2n) {
+            border-top:0;
+        }
+
+        .meeting {
+            background-color: #aa8897;
+            max-height: 20px;
+            width: 80px;
+            overflow:hidden;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Hacing Raincalendar: Custom UI and selectionType</h2>
+<pre data-function="demoWeek">
+
+</pre>
+<div id="demo_window" class="rain_calendar_container">
+
+</div>
+
+
+<script type="text/javascript">
+    require(["RainCalendar"],function(RainCalendar) {
+        demoWeek(RainCalendar);
+    });
+
+    function demoWeek(RainCalendar) {
+
+
+        RainCalendar.registerUI(
+            "weekView",
+            function () {
+
+                var hoursFormat = function(n) {
+                    return (n<10? "0"+n : n)+ ":00";
+                };
+
+                var _listeners = {
+                    viewChange : [],
+                    markDate   : []
+                };
+
+                var _callback = function (c, ui, args) {
+                    if (args === undefined) args = [];
+                    for (var i = 0; i < _listeners[c].length; i++) {
+                        _listeners[c][i].apply(ui, args);
+                    }
+                };
+
+                var _build = function (options, locale) {
+                    var date      = options.startDate;
+                    var day       = date.getDate();
+                    var dayOfWeek = date.getDay();
+                    var html      = '<table class="raincalendar-week">' +
+                        '<thead>' +
+                        '<tr><th>hour/day</th>{{thhead}}</tr>' +
+                        '</thead>' +
+                        '<tbody>' +
+                        '<tr><td>{{tdhours}}</td>{{tdbody}}</tr>' +
+                        '</tbody>' +
+                        '</table>';
+
+
+                    var cDate;
+                    var thhead = "";
+                    for (var i = 0; i < 7; i++) {
+                        cDate = new Date(date);
+                        cDate.setDate(i + day - dayOfWeek);
+                        thhead += "<th data-day='"+RainCalendar.utils.date2string(cDate)+"'>" + locale.shortDays[i] + " " + cDate.getDate() + "/" + cDate.getMonth() + "</th>";
+                    }
+
+                    var tdbody = "", tdivs = "", tdhours = "";
+                    for(i = 0;  i < 24; i++) {
+                        tdivs+="<div data-hour='"+i+"'></div><div data-hour='"+i+".5'></div>";
+                        tdhours+="<div>"+hoursFormat(i)+"</div>";
+                    }
+
+                    for (i = 0; i < 7; i++) {
+                        tdbody += "<td>"+tdivs+"</td>";
+                    }
+                   html = html.split("{{thhead}}").join(thhead).split("{{tdbody}}").join(tdbody).split("{{tdhours}}").join(tdhours)
+                    return $(html);
+
+                };
+
+                var _redraw = function () {
+
+                };
+                return {
+                    build : function (element, options, locale, api) {
+                        $(element).append(_build(options, locale));
+                        $(element).on('click', function(e) {
+                            var hour = $(e.target).closest('[data-hour]').attr('data-hour')
+                            var day =$(element).find("th").eq($(e.target).closest('td').index()).attr("data-day");
+                            _callback('markDate', this, [day, hour]);
+
+                        });
+                        var ui        = {};
+                        ui.onMarkDate = function (cbk) {
+                            _listeners.markDate.push(cbk);
+                        };
+
+                        ui.tagDatesAs = function (ranges, className) {
+
+                        };
+
+                        ui.onViewChange = function (cbk) {
+                            _listeners.viewChange.push(cbk);
+                        };
+
+                        ui.redraw = function () {
+                            _redraw();
+                        };
+
+                        ui.setOption = function (option, value) {
+                            //_setOption(options, option, value);
+                        };
+
+                        ui.showDate = function (date) {
+                        };
+
+                        ui.getViewRange = function () {
+
+                        };
+
+                        ui.addBox = function(className,date, time, label) {
+                            var index = $(element).find("thead th[data-day='"+date+"']").index();
+                            console.log(time);
+                            $(element).find("tbody td").eq(index).find("div[data-hour='"+time+"']").append($('<span/>').html(label).addClass(className));
+                        };
+
+                        return ui;
+                    }
+                }
+            }
+        );
+        RainCalendar.registerSelectionType('meeting', function($el, options, api) {
+            var _listeners = {
+                choosedDateTime : []
+            };
+
+            var _callback = function (c, api, args) {
+                if (args === undefined) args = [];
+                for (var i = 0; i < _listeners[c].length; i++) {
+                    _listeners[c][i].apply(api, args);
+                }
+            };
+
+            api.ui().onMarkDate(function(date, time) {
+                _callback('choosedDateTime',api, [date,time]);
+            });
+            return {
+                onChoosedDateTime: function(cbk) {
+                    _listeners.choosedDateTime.push(cbk);
+                }
+            };
+        });
+        var currentView = new Date();
+        var calendar    = RainCalendar('#demo_window', {
+            /*
+             * numberOfMonths depending of screen width
+             */
+            numberOfMonths : function () {
+                return Math.floor(window.innerWidth / 300);
+            },
+            startDate      : currentView,
+            disabledDates  : [["--", "yesterday"]],
+            weekStart      : 1,
+            selectionType  : 'meeting',
+            ui             : "weekView"
+        });
+
+//        calendar.ui().tagDatesAs(["today", "tomorrow"], "important-meeting");
+//        calendar.ui().tagDatesAs(["2018-01-01", "2018-12-25"], "party");
+
+        calendar.onChoosedDateTime(function(day, time) {
+            this.ui().addBox("meeting", day, time, "meeting");
+        });
+
+    }
+
+    $('[data-function]').each(function () {
+        var fName = $(this).attr("data-function");
+        eval('var str = ' + fName + '.toString();');
+        var lines = str.split("\n");
+        lines.pop();
+        lines.pop();
+        lines.shift();
+        lines.shift();
+        str = lines.join("\n").replace(/^(\t{2})/g, "").split("<").join("&lt;").split(">").join("&gt;");
+        $(this).html(str);
+    });
+</script>
+
+</body>
+</html>
