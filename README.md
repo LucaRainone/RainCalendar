@@ -32,7 +32,7 @@ Including `RainCalendar.AMD.min.js` makes an AMD module available.
 
 Example:
    ```javascript
-  define(["path/your/lib/RainCalendar-AMD.min"], function(calendar) {
+  require(["path/your/lib/RainCalendar-AMD.min"], function(calendar) {
     calendar('#calendar', {
         startDate: new Date()
     });
@@ -45,7 +45,7 @@ Including `RainCalendar.AMD-named.min.js` allows the usage as AMD module with fi
 
 Example:
   ```javascript
- define(["RainCalendar"], function(calendar) {
+ require(["RainCalendar"], function(calendar) {
    calendar('#calendar', {
        startDate: new Date()
    });
