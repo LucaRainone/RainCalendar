@@ -149,6 +149,40 @@ define(function() {
                 }
             }
             return value;
+        },
+        ucfirst: function(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        },
+        buildEventsListener: function(eventsName, object) {
+            var _listeners = {};
+            var method;
+
+            for(var i = 0; i < eventsName.length; i++) {
+                _listeners[eventsName[i]] = [];
+                method = "on"+this.ucfirst(eventsName[i]);
+
+                object[method] = (function(eventName) {
+                    return function(cbk) {
+                        _listeners[eventName].push(cbk);
+                    }
+                })(eventsName[i]);
+            }
+
+            var _callback = function (c, ui, args) {
+                if (args === undefined) args = [];
+                for (var i = 0; i < _listeners[c].length; i++) {
+                    _listeners[c][i].apply(ui, args);
+                }
+            };
+
+
+            return function(name, context, args) {
+                if (args === undefined) args = [];
+                for (var i = 0; i < _listeners[name].length; i++) {
+                    _listeners[name][i].apply(context, args);
+                }
+            }
+
         }
     }
 });

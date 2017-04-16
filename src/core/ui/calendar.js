@@ -156,17 +156,8 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
                        , options
                    );
 
-                   var _listeners = {
-                       viewChange: [],
-                       markDate : []
-                   };
 
-                   var _callback = function(c, ui, args) {
-                       if(args === undefined) args = [];
-                       for(var i = 0; i < _listeners[c].length; i++) {
-                           _listeners[c][i].apply(ui,args);
-                       }
-                   };
+                   var _callbacks  = utils.buildEventsListener(['viewChange', 'markDate'], ui);
 
                    var _redraw = function() {
                        _see($el, currentDate, locale, options);
@@ -180,7 +171,7 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
                                _addClassToMonth($el, d, className);
                            });
                        }
-                       _callback('viewChange', ui);
+                       _callbacks('viewChange', ui);
                    };
 
                    var taggedDays = {};
@@ -216,7 +207,7 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
                        var $table    = $td.parent().parent().parent();
                        var dataMonth = $table.attr("data-month-year").split("-");
                        var d         = utils.normalizeDate(dataMonth[1], dataMonth[0], day);
-                       _callback('markDate', ui, [d, ev.shiftKey, ev.altKey]);
+                       _callbacks('markDate', ui, [d, ev.shiftKey, ev.altKey]);
                    });
 
                    api.onSetSelectedDates(function () {
@@ -226,9 +217,6 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
                    api.onSetDisabledDates(function () {
                        _syncDisabled($el, api);
                    });
-                   ui.onMarkDate = function(cbk) {
-                       _listeners.markDate.push(cbk);
-                   };
 
                    ui.tagDatesAs = function (ranges, className) {
                        if(typeof ranges !== "function") {
@@ -243,9 +231,6 @@ define([ 'helpers/utils', 'html/table-per-month', 'domEngine'],
                        });
                    };
 
-                   ui.onViewChange = function(cbk) {
-                        _listeners.viewChange.push(cbk);
-                   };
 
                    ui.redraw = function() {
                        _redraw();

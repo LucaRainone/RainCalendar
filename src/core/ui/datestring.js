@@ -1,19 +1,9 @@
 define(['domEngine', 'helpers/utils'], function ($, utils) {
 
-    var _listeners = {
-        viewChange: [],
-        markDate : []
-    };
-
-    var _callback = function(c, ui, args) {
-        if(args === undefined) args = [];
-        for(var i = 0; i < _listeners[c].length; i++) {
-            _listeners[c][i].apply(ui,args);
-        }
-    };
     return {
         build: function (element, options, locale, api) {
-            var format = options.fromDatesToHTML || function(d) {
+
+            var format = options.fromDatesToHTML || function (d) {
                 var datesString = [];
                 for(var i = 0; i < d.length; i++) {
                     if(d[i].length === 1) {
@@ -24,20 +14,15 @@ define(['domEngine', 'helpers/utils'], function ($, utils) {
                 }
                 return datesString.join("<br/>");
             };
-            var ui = {};
+
+            var ui        = {};
+            var _callback = utils.buildEventsListener(['viewChange', 'markDate'], ui);
+
             var $el = $(element);
             $el.empty();
 
-            ui.onMarkDate = function(cbk) {
-                _listeners.markDate.push(cbk);
-            };
-
             ui.tagDatesAs = function (ranges, className) {
 
-            };
-
-            ui.onViewChange = function(cbk) {
-                _listeners.viewChange.push(cbk);
             };
 
             api.onSetSelectedDates(function(dates) {
@@ -46,5 +31,5 @@ define(['domEngine', 'helpers/utils'], function ($, utils) {
 
             return ui;
         }
-    }
+    };
 });

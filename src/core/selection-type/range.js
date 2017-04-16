@@ -1,8 +1,16 @@
 define(["helpers/utils"], function (utils) {
 
-    var getUnavailableForRange = function (d, disabledDates) {
-        if (disabledDates.length === 0) return [];
 
+    /**
+     * compute a range of available and unavailable dates, depending of first date selected
+     * and configured disabled dates.
+     * @param d
+     * @param disabledDates
+     * @returns Object
+     */
+    var getUnavailableForRange = function (d, disabledDates) {
+
+        // compute the vertex containing the date d
         var min = 0, max = Number.MAX_VALUE, c;
         for (var i = 0, j; i < disabledDates.length; i++) {
             for (j = 0; j < disabledDates[i].length; j++) {
@@ -42,6 +50,14 @@ define(["helpers/utils"], function (utils) {
         return {yes : available, no : unavailable};
     };
 
+    /**
+     * sync view
+     * @param ui
+     * @param currentDisabledForRange
+     * @param currentEnabledForRange
+     * @param currentRangeStart
+     * @private
+     */
     var _syncTags = function(ui, currentDisabledForRange,  currentEnabledForRange, currentRangeStart) {
         ui.tagDatesAs(currentDisabledForRange, "disabled-for-range");
         ui.tagDatesAs(currentEnabledForRange, "enable-for-range");
@@ -54,6 +70,11 @@ define(["helpers/utils"], function (utils) {
         var currentDisabledForRange = [];
         var currentEnabledForRange = [];
         var currentRangeStart = [];
+
+        /*
+         on markdate build the range. If it's the first mark, is the first vertex of the range.
+         Find and disable temporarly all dates not selectable.
+         */
         ui.onMarkDate(function (d) {
 
             if (selection.length === 0 || selection.length >= 2) {
@@ -62,7 +83,7 @@ define(["helpers/utils"], function (utils) {
                 api.select([]);
 
                 currentRangeStart = d;
-                var rangesFlags = getUnavailableForRange(d, api.getDisabledDates())
+                var rangesFlags = getUnavailableForRange(d, api.getDisabledDates());
                 currentDisabledForRange = rangesFlags.no;
                 currentEnabledForRange = rangesFlags.yes;
                 _syncTags(ui, currentDisabledForRange, currentEnabledForRange, currentRangeStart);
@@ -74,7 +95,7 @@ define(["helpers/utils"], function (utils) {
                 } else {
                     selection.unshift(d);
                 }
-// TODO add class to table and manage one class only
+
                 currentRangeStart = [];
                 api.select([selection]);
                 currentDisabledForRange  = [];
@@ -84,6 +105,7 @@ define(["helpers/utils"], function (utils) {
 
         });
 
+        // override the api.select method, preventing not allowed selection
         var backupSelect = api.select;
         api.select = function (d) {
             if (!utils.isArray(d)) {
@@ -91,6 +113,8 @@ define(["helpers/utils"], function (utils) {
             }
             backupSelect(d);
         };
+
+
         return api;
     }
 });
