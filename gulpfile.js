@@ -115,6 +115,16 @@ gulp.task('test-coverage', function() {
     .pipe(gulp.dest('reports'));
 });
 
+gulp.task('increment-version', function(done) {
+    var pck = JSON.parse(fs.readFileSync("package.json"));
+    var versionParts = pck.version.split(".");
+    var newVersion = versionParts[0]+"."+versionParts[1]+"." +(++versionParts[2])
+    pck.version = newVersion;
+    fs.writeFileSync("package.json", JSON.stringify(pck,null, 2));
+    done();
+
+});
+
 // defaault task
 gulp.task('default', ['build-all']);
 

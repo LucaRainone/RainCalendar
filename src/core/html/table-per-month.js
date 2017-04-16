@@ -89,10 +89,8 @@ define(["domEngine"], function ($) {
         $tbody.append($tr);
 
         if (m === now.getMonth() && Y === now.getFullYear()) {
-            $tbody.find("td").each(function () {
-                if ($(this).attr("data-day") === now.getDate()) {
-                    $(this).addClass('today');
-                }
+            $tbody.find("td[data-day='"+now.getDate()+"']").each(function () {
+                $(this).addClass('today');
             });
         }
 
