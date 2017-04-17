@@ -8,4 +8,7 @@ install:
 before_script:
   - npm install -g gulp
 
-script: gulp test-coverage && gulp coveralls
+script:
+  - gulp build-all
+  - gulp test-coverage
+  - gulp coveralls

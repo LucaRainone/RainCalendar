@@ -1,6 +1,6 @@
 {
   "name": "RainCalendar",
-  "version": "0.1.7",
+  "version": "0.1.11",
   "description": "",
   "scripts": {
     "test": "gulp test",

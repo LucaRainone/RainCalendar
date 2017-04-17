@@ -201,6 +201,68 @@ define(["helpers/utils"], function (utils) {
 
         });
 
+        describe("utils.ucfirst is working properly", function() {
+            it("simple string", function() {
+                expect(utils.ucfirst("testDeTest")).toEqual("TestDeTest");
+            });
+            it("non a-z char", function() {
+                expect(utils.ucfirst("-testDeTest")).toEqual("-testDeTest");
+            });
+        });
+
+        describe("utils.buildEventsListener is working properly", function() {
+            var obj = {};
+            var _trigger;
+            var _callbacks = {click:function() {}, click2: {}, simpleSpy: {}};
+            var _simpleSpy = function() {};
+
+            beforeEach(function() {
+                spyOn(_callbacks, 'click');
+                spyOn(_callbacks, 'click2');
+                spyOn(_callbacks, 'simpleSpy');
+                _trigger = utils.buildEventsListener(['test1','test2','click'], obj);
+
+                expect(obj.onTest1).toBeDefined();
+                expect(obj.onTest2).toBeDefined();
+                expect(obj.onClick).toBeDefined();
+
+            });
+
+            it("creating listeners", function() {
+                expect(obj.onTest1).toBeDefined();
+                expect(obj.onTest2).toBeDefined();
+                expect(obj.onClick).toBeDefined();
+            });
+
+            it("listener trigger", function() {
+
+                obj.onClick(_callbacks.click);
+                _trigger('click', this);
+                expect(_callbacks.click).toHaveBeenCalled();
+            });
+
+            it("multiple listener trigger", function() {
+
+                obj.onClick(_callbacks.click);
+                obj.onClick(_callbacks.click2);
+                _trigger('click', this);
+                expect(_callbacks.click).toHaveBeenCalled();
+                expect(_callbacks.click2).toHaveBeenCalled();
+            });
+
+            it("contexts and args", function() {
+                obj.onClick(function(a,b) {
+                    expect(a).toBe(1);
+                    expect(b).toBe(2);
+                    expect(this).toBe(obj);
+                    _callbacks.simpleSpy();
+                });
+
+                _trigger('click', obj, [1,2]);
+                expect(_callbacks.simpleSpy).toHaveBeenCalled();
+            });
+        });
+
 
     });
 
