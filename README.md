@@ -1,5 +1,7 @@
 # RainCalendar
 
+[![Build Status](https://travis-ci.org/LucaRainone/RainCalendar.svg?branch=master)](https://travis-ci.org/LucaRainone/RainCalendar)
+
 A minimalist and hackable calendar in **pure Javascript**. 
 
 **``dist`` folder contains different versions. Pick the one you need!**

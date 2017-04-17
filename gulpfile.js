@@ -115,6 +115,13 @@ gulp.task('test-coverage', function() {
     .pipe(gulp.dest('reports'));
 });
 
+gulp.task('coveralls', function() {
+    var coveralls = require('gulp-coveralls');
+
+    return gulp.src('./reports/coverage.lcov')
+    .pipe(coveralls());
+});
+
 gulp.task('increment-version', function(done) {
     var pck = JSON.parse(fs.readFileSync("package.json"));
     var versionParts = pck.version.split(".");
