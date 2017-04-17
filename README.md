@@ -1,6 +1,7 @@
 # RainCalendar
 
 [![Build Status](https://travis-ci.org/LucaRainone/RainCalendar.svg?branch=master)](https://travis-ci.org/LucaRainone/RainCalendar)
+[![Coverage Status](https://coveralls.io/repos/github/LucaRainone/RainCalendar/badge.svg?branch=master)](https://coveralls.io/github/LucaRainone/RainCalendar?branch=master)
 
 A minimalist and hackable calendar in **pure Javascript**. 
 
