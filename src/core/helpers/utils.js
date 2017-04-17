@@ -168,14 +168,6 @@ define(function() {
                 })(eventsName[i]);
             }
 
-            var _callback = function (c, ui, args) {
-                if (args === undefined) args = [];
-                for (var i = 0; i < _listeners[c].length; i++) {
-                    _listeners[c][i].apply(ui, args);
-                }
-            };
-
-
             return function(name, context, args) {
                 if (args === undefined) args = [];
                 for (var i = 0; i < _listeners[name].length; i++) {
