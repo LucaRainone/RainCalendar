@@ -1,11 +1,10 @@
 {
   "name": "RainCalendar",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "gulp test",
-    "build": "npm install && gulp"
+    "build": "gulp build-all"
   },
   "author": "Luca Rainone",
   "_config": {
