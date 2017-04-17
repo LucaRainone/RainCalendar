@@ -3,7 +3,7 @@ define(["domEngine"], function ($) {
     return function (m, Y, options, locale) {
 
         options = {
-            className         : options.className || "rain_calendar",
+            className         : options.className || "raincalendar",
             weekStart         : options.weekStart || 0,
             visibleBoundsDays : options.visibleBoundsDays || false,
             interactive : options.interactive

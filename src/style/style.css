@@ -1,5 +1,5 @@
 
-table.rain_calendar {
+table.raincalendar {
     border-collapse: separate;
     border-spacing: 3px;
     margin-right: 10px;
@@ -11,49 +11,49 @@ table.rain_calendar {
 
 }
 
-table.rain_calendar:last-child {
+table.raincalendar:last-child {
     margin-right: 0
 }
 
-table.rain_calendar thead tr:first-child th {
+table.raincalendar thead tr:first-child th {
     background-color: #fff;
     color: #717070
 }
 
-table.rain_calendar .selected {
+table.raincalendar .selected {
     background-color: #b5b5b8;
     color: #000 !important
 }
 
-table.rain_calendar tr td {
+table.raincalendar tr td {
     background-color: #ffffff;
     color: #717070
 }
 
-table.rain_calendar tr th {
+table.raincalendar tr th {
     background-color: #eff0f0;
     color: #717070
 }
 
-table.rain_calendar .today {
+table.raincalendar .today {
     color:green;
 }
 
-table.rain_calendar .disabled {
+table.raincalendar .disabled {
     opacity: .4;
     cursor: not-allowed !important;
 
 }
 
 
-table.rain_calendar .prev-month, table.rain_calendar .next-month {
+table.raincalendar .prev-month, table.raincalendar .next-month {
     color: #efefef !important;
     cursor: default;
     background-color: #eff0f0
 }
 
 
-.rain_calendar tr td,  .rain_calendar tr th {
+.raincalendar tr td,  .raincalendar tr th {
     padding: 3px;
     text-align: center !important;
     cursor: default;
@@ -62,10 +62,10 @@ table.rain_calendar .prev-month, table.rain_calendar .next-month {
     width: 30px;
     height: 20px
 }
-.rain_calendar th.arrow-right {
+.raincalendar th.arrow-right {
     text-align: right !important;
 }
-.rain_calendar .arrow-right span{
+.raincalendar .arrow-right span{
     width: 0;
     height: 0;
     border: 10px solid transparent;
@@ -75,10 +75,10 @@ table.rain_calendar .prev-month, table.rain_calendar .next-month {
 
 }
 
-.rain_calendar th.arrow-left {
+.raincalendar th.arrow-left {
     text-align: left !important;
 }
-.rain_calendar .arrow-left span{
+.raincalendar .arrow-left span{
 
     width: 0;
     height: 0;
@@ -88,32 +88,32 @@ table.rain_calendar .prev-month, table.rain_calendar .next-month {
     left: -10px;
 }
 
-.rain_calendar:first-child .arrow-left span,
-.rain_calendar:last-child .arrow-right span
+.raincalendar:first-child .arrow-left span,
+.raincalendar:last-child .arrow-right span
 {
     display: block;
     cursor:pointer;
 }
 
 
-.rain_calendar thead tr:first-child th, .rain_calendar thead tr:first-child th {
+.raincalendar thead tr:first-child th, .raincalendar thead tr:first-child th {
     padding: 5px 0;
     font-weight: normal;
     font-size: 15px;
     height: 30px
 }
 
-.rain_calendar thead tr:last-child th {
+.raincalendar thead tr:last-child th {
     font-weight: normal;
     font-size: 12px;
     padding-bottom: 10px
 }
 
-.rain_calendar .emptyrow {
+.raincalendar .emptyrow {
     visibility: hidden
 }
 
-.rain_calendar.interactive tr td:hover:not(.disabled) {
+.raincalendar.interactive tr td:hover:not(.disabled) {
     text-decoration: underline;
     cursor: pointer
 }
@@ -133,7 +133,7 @@ table.rain_calendar .prev-month, table.rain_calendar .next-month {
     background-color: #defff1 !important;
 }
 
-table.rain_calendar tr td.day-0 {
+table.raincalendar tr td.day-0 {
     color: #d8741f;
     text-align: center
 }
